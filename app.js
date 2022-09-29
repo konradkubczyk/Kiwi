@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const licensesRouter = require('./routes/licenses');
 const indexRouter = require('./routes/index');
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/licenses', licensesRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
