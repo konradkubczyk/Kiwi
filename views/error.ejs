@@ -2,14 +2,17 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><% if (locals.title) { %><%= title %> | <% } %>Hermes</title>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><% if (locals.title) { %><%= title %> | <% } %>Hermes</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js" defer></script>
 </head>
 
 <body>
-  <pre>
-      <%= error.stack %>
+    <pre>
+        <%= error.stack %>
     </pre>
 </body>
 
