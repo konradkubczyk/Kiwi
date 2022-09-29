@@ -4,13 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><% if (locals.title) { %><%= title %> | <% } %>Hermes</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <body>
-    <h1>Licenses</h1>
-    <% for (const license of licenses) { %>
-        <hr>
-        <h2><%= license.name %></h2>
-        <pre><%= license.licenseText %></pre>
-    <% } %>
+    <main class="container p-3 p-sm-5">
+        <h1>Licenses</h1>
+        <p>This project was made possible by the amazing solutions listed below.</p>
+        <div class="accordion mt-4" id="licensesAccordion">
+            <% licenses.forEach((license, index) => { %>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="accordion-heading-<%= index %>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-<%= index %>" aria-expanded="false" aria-controls="accordion-collapse=<%= index %>">
+                            <%= license.name %>
+                            <span class="ms-2 badge rounded-pill text-dark border d-flex align-items-center fw-normal">
+                                <%= license.version %>
+                                <% if (license.license) { %>
+                                    <div class="vr mx-1"></div>
+                                    <%= license.license %>
+                                <% } %>
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="accordion-collapse-<%= index %>" class="accordion-collapse collapse" aria-labelledby="accordion-heading-<%= index %>" data-bs-parent="#licensesAccordion">
+                        <pre class="accordion-body">
+                            <%= license.licenseText %>
+                        </pre>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </main>
 </body>
 </html>
