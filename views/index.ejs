@@ -4,9 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><% if (locals.title) { %><%= title %> | <% } %>Hermes</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js" defer></script>
 </head>
-<body>
-    <h1>Welcome to Hermes</h1>
-    <h2>On-demand XML to ICS schedule transcriber</h2>
+<body style="background-image: url('/static/img/gradienta-ix_kUDzCczo-unsplash.jpg'); background-position: center; background-size: cover;">
+    <div style="background-color: #ffffff90;" class="d-flex min-vh-100 align-items-center justify-content-center">
+        <main style="max-width: 600px;" class="container-sm">
+            <h1 class="fs-1">Welcome to Hermes</h1>
+            <h2 class="fs-4 my-3 text-dark text-opacity-50">On-demand XML to ICS schedule transcriber</h2>
+            <p>
+                To get a URL of a calendar for your schedule, just prepend its address with <strong>https://<%= appDomain %>/</strong>. Now you can use this URL to import events to your favorite calendar app. Yes, it's that easy!
+            </p>
+            <p>
+                Currently the app only supports group schedules from <a class="text-dark" href="https://planzajec.uek.krakow.pl/" target="_blank" rel="noreferrer nofollow">planzajec.uek.krakow.pl</a>.
+            </p>
+            <hr class="text-dark text-opacity-50">
+            <div class="d-flex gap-3">
+                <span class="text-dark text-opacity-50"><%= process.env.npm_package_version %></span>
+                <div class="vr text-dark text-opacity-50"></div>
+                <a class="text-decoration-none text-dark text-opacity-50" href="https://gitlab.com/konradkubczyk/hermes" target="_blank" rel="noreferrer">Source code</a>
+                <div class="vr text-dark text-opacity-50"></div>
+                <a class="text-decoration-none text-dark text-opacity-50" href="/licenses">Licenses</a>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

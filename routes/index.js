@@ -5,7 +5,9 @@ const Schedule = require('../controllers/schedule');
 
 // GET home page
 router.get('/', function (req, res, next) {
-  res.render('index');
+  const appDomain = req.get('host');
+
+  res.render('index', { appDomain });
 });
 
 // GET /* (all other routes)
