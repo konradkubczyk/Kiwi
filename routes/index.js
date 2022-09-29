@@ -5,7 +5,7 @@ const Schedule = require('../controllers/schedule');
 
 // GET home page
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Hermes' });
+  res.render('index');
 });
 
 // GET /* (all other routes)
