@@ -91,7 +91,7 @@ class Schedule {
           end: new Date(
             event['termin'][0] + 'T' + event['do-godz'][0].split(' ')[0] + ':00'
           ),
-          location: event['sala'][0],
+          location: event['sala'][0].match(/<a href="(.*)">.*<\/a>/) ? event['sala'][0].match(/<a href="(.*)">.*<\/a>/)[1] : event['sala'][0],
           description: event['typ'][0].charAt(0).toUpperCase() + event['typ'][0].slice(1) + '\n' + event['nauczyciel'].map(organizer => organizer['_']).join(', ')
         });
       }
