@@ -4,6 +4,10 @@ const xml2js = require('xml2js');
 const ical = require('ical-generator');
 
 class Schedule {
+  /**
+   * Creates a new Schedule object
+   * @param {String} scheduleURL 
+   */
   constructor(scheduleURL) {
     this.scheduleURL = scheduleURL + '&xml';
   }
