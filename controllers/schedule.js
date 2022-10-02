@@ -80,7 +80,7 @@ class Schedule {
 
       for (const event of events) {
         calendar.createEvent({
-          summary: event['przedmiot'][0],
+          summary: event['typ'][0].charAt(0).toUpperCase() + event['typ'][0].slice(1) + ' | ' + event['przedmiot'][0],
           start: new Date(
             event['termin'][0] + 'T' + event['od-godz'][0] + ':00'
           ),
