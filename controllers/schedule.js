@@ -2,6 +2,7 @@ const axios = require('axios');
 const https = require('https');
 const xml2js = require('xml2js');
 const ical = require('ical-generator');
+const crypto = require('crypto');
 
 class Schedule {
   /**
@@ -80,6 +81,9 @@ class Schedule {
 
       for (const event of events) {
         calendar.createEvent({
+          id: crypto.createHash('md5').update(
+            event['typ'][0] + event['przedmiot'][0] + event['termin'][0] + event['od-godz'][0] + event['do-godz'][0] + event['sala'][0]
+          ).digest('hex'),
           summary: event['typ'][0].charAt(0).toUpperCase() + event['typ'][0].slice(1) + ' | ' + event['przedmiot'][0],
           start: new Date(
             event['termin'][0] + 'T' + event['od-godz'][0] + ':00'
