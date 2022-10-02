@@ -1,17 +1,17 @@
-### Node Express template project
+# 🥝 Kiwi
 
-This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
+## 📕 About
 
-Improvements can be proposed in the [original project](https://gitlab.com/gitlab-org/project-templates/express).
+Kiwi is an open-source on-demand XML to ICS schedule transcriber, created to make it easier to add external schedules to personal calendars through subscription URLs. It currently works only with select schedules from a single source, as the app was created as a small project with an individual use case in mind.
 
-### CI/CD with Auto DevOps
+## 🤔 How it works
 
-This template is compatible with [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/).
+Kiwi works as a middleman. When a request comes through, it performs a check on it's validity and then proceeds to download information necessary from an external schedule source. These information is then processed to compose an ICS calendar file, which is then served as a response. In case of an issue, the the app responds with a text hinting towards the error's source.
 
-If Auto DevOps is not already enabled for this project, you can [turn it on](https://docs.gitlab.com/ee/topics/autodevops/#enabling-auto-devops) in the project settings.
+## 🔗 Useful links
 
-### Developing with Gitpod
+If you are interested in the project and would like to learn more or help make it better, these links may help:
 
-This template has a fully-automated dev setup for [Gitpod](https://docs.gitlab.com/ee/integration/gitpod.html).
-
-If you open this project in Gitpod, you'll get all Node dependencies pre-installed and Express will open a web preview.
+- [Releases](https://gitlab.com/konradkubczyk/kiwi/-/releases) - access information and resources regarding successive releases of the app.
+- [Issues](https://gitlab.com/konradkubczyk/kiwi/-/issues) - you can post about any issues or bugs you encounter here.
+- [Marge requests](https://gitlab.com/konradkubczyk/kiwi/-/merge_requests) - contributions are always welcome.
