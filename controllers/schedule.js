@@ -9,15 +9,17 @@ class Schedule {
    * Creates a new Schedule object
    * @param {String} scheduleURL 
    */
-  constructor(scheduleURL) {
-    this.scheduleURL = scheduleURL + '&xml';
+  constructor(properties) {
+    this.properties = properties;
+    // this.scheduleURL = scheduleURL + '&xml';
   }
 
   /**
    * Gets XML data from schedule URL and returns it as JSON
+   * @param {String} scheduleURL URL of the schedule
    * @returns {Promise} Calendar data in JSON format
    */
-  async #getData() {
+  async #getData(scheduleURL) {
     const agent = axios.create({
       httpsAgent: new https.Agent({
         rejectUnauthorized: false
@@ -27,7 +29,7 @@ class Schedule {
     let response;
     try {
       response = await agent.get(
-        this.scheduleURL,
+        scheduleURL,
         {
           headers: {
             'Content-Type': 'application/xml'
@@ -56,7 +58,35 @@ class Schedule {
    * @returns {Promise} Calendar data in ICS format
    */
   async getICS() {
-    const scheduleJSON = await this.#getData();
+
+    // Get data for main schedule
+    let scheduleJSON = await this.#getData(`https://planzajec.uek.krakow.pl/index.php?typ=G&id=${this.properties.main.id}&okres=3&xml`);
+
+    // Get data for extra schedules and merge it with main schedule
+    if (this.properties.extra) {
+      
+      // Filter out events of type 'Lektorat'
+      scheduleJSON['plan-zajec']['zajecia'] = scheduleJSON['plan-zajec']['zajecia'].filter(event => {
+        return event['typ'][0] !== 'Lektorat';
+      });
+
+      for (const extraSchedule of this.properties.extra) {
+        const extraScheduleJSON = await this.#getData(`https://planzajec.uek.krakow.pl/index.php?typ=N&id=${extraSchedule.id}&okres=3&xml`);
+
+        // Filter out events from other groups
+        extraScheduleJSON['plan-zajec']['zajecia'] = extraScheduleJSON['plan-zajec']['zajecia'].filter(event => {
+          return event['grupa'][0] === extraSchedule.group;
+        });
+
+        // Add teacher to every event from the schedule name as organizer in the format used in other schedules
+        for (const event of extraScheduleJSON['plan-zajec']['zajecia']) {
+          event['nauczyciel'] = [{ '_': extraScheduleJSON['plan-zajec']['$']['nazwa'].split(',').reverse().join(' ').trim() }];
+        }
+
+        // Merge extra schedule with main schedule
+        scheduleJSON['plan-zajec']['zajecia'] = scheduleJSON['plan-zajec']['zajecia'].concat(extraScheduleJSON['plan-zajec']['zajecia']);
+      }
+    }
 
     let events;
     try {
@@ -76,7 +106,7 @@ class Schedule {
           product: 'Plan zajęć',
           language: 'PL'
         },
-        source: this.scheduleURL
+        source: 'https://planzajec.uek.krakow.pl'
       });
 
       for (const event of events) {
