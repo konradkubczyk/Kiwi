@@ -65,9 +65,9 @@ class Schedule {
 		// Get data for extra schedules and merge it with main schedule
 		if (this.properties.extra) {
 
-			// Filter out events of type 'Lektorat'
+			// Filter out events with 'Przedmiot' starting with 'Język obcy'
 			scheduleJSON['plan-zajec']['zajecia'] = scheduleJSON['plan-zajec']['zajecia'].filter(event => {
-				return event['typ'][0] !== 'Lektorat';
+				return !event['przedmiot'][0].startsWith('Język obcy');
 			});
 
 			for (const extraSchedule of this.properties.extra) {
@@ -95,6 +95,13 @@ class Schedule {
 			console.error(error);
 			throw new Error('Error while trying to get events from parsed data');
 		}
+
+		// Sort events by start date and time
+		events.sort((a, b) => {
+			const aDate = new Date(a['termin'][0] + 'T' + a['od-godz'][0] + ':00');
+			const bDate = new Date(b['termin'][0] + 'T' + b['od-godz'][0] + ':00');
+			return aDate - bDate;
+		});
 
 		try {
 			const calendar = new ical({
