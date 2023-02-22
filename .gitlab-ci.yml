@@ -1,7 +1,7 @@
 stages:
   - build
 
-build:
+build_x86:
   stage: build
   image: docker:latest
   services:
@@ -9,7 +9,20 @@ build:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH:latest .
-    - docker push $CI_REGISTRY/$CI_PROJECT_PATH:latest
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest
+  only:
+    - master
+
+build_arm:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build --platform=linux/arm64 -t $CI_REGISTRY/$CI_PROJECT_PATH:arm64-latest .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH:arm64-latest
   only:
     - master
