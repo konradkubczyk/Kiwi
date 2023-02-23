@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiwi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kiwi
+  template:
+    metadata:
+      labels:
+        app: kiwi
+    spec:
+      containers:
+      - name: kiwi
+        image: registry.gitlab.com/konradkubczyk/kiwi:x86_64-latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kiwi
+spec:
+  type: ClusterIP
+  selector:
+    app: kiwi
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kiwi
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+    - kiwi.example.com
+    secretName: kiwi-tls
+  rules:
+  - host: kiwi.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kiwi
+            port:
+              name: http
+
