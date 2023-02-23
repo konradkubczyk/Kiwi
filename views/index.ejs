@@ -1,33 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><% if (locals.title) { %><%= title %> | <% } %>Kiwi</title>
+    <title>
+        <% if (locals.title) { %>
+            <%= title %> | <% } %>Kiwi
+    </title>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <script src="/static/bootstrap/js/bootstrap.bundle.min.js" defer></script>
 </head>
-<body style="background-image: url('/static/img/gradienta-ix_kUDzCczo-unsplash.jpg'); background-position: center; background-size: cover;">
+
+<body
+    style="background-image: url('/static/img/gradienta-ix_kUDzCczo-unsplash.jpg'); background-position: center; background-size: cover;">
     <div style="background-color: #ffffff90;" class="d-flex min-vh-100 align-items-center justify-content-center">
-        <main style="max-width: 600px;" class="container-sm">
+        <main style="max-width: 600px;" class="container-sm my-3 mx-2">
             <h1 class="fs-1">Welcome to Kiwi</h1>
             <h2 class="fs-4 my-3 text-dark text-opacity-50">On-demand XML to ICS schedule transcriber</h2>
             <p>
-                To get a URL of a calendar for your schedule, just prepend its address with <strong>https://<%= appDomain %>/</strong>. Now you can use this URL to import events to your favorite calendar app. Yes, it's that easy!
+                To get a URL of a calendar for your schedule, just prepend its address with <strong>https://<%=
+                        appDomain %>/</strong>. Now you can use this URL to import events to your favorite calendar app.
+                You can also click the button below to open a form that will help you create a calendar URL with support for additional groups.
             </p>
-            <p>
-                The app supports schedules from <a class="text-dark" href="https://planzajec.uek.krakow.pl/" target="_blank" rel="noreferrer nofollow">planzajec.uek.krakow.pl</a>.
-            </p>
+
+            <button class="btn btn-outline-dark w-100 mb-1" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#calendarUrlCreator" aria-controls="calendarUrlCreator">
+                Create calendar URL
+            </button>
+
             <hr class="text-dark text-opacity-50">
             <div class="d-flex gap-3">
-                <a class="text-decoration-none text-dark text-opacity-50" href="https://gitlab.com/konradkubczyk/kiwi/-/releases#v<%= process.env.npm_package_version %>" target="_blank" rel="noreferrer"><%= process.env.npm_package_version %></a>
+                <a class="text-decoration-none text-dark text-opacity-50"
+                    href="https://gitlab.com/konradkubczyk/kiwi/-/releases#v<%= process.env.npm_package_version %>"
+                    target="_blank" rel="noreferrer">
+                    <%= process.env.npm_package_version %>
+                </a>
                 <div class="vr text-dark text-opacity-50"></div>
-                <a class="text-decoration-none text-dark text-opacity-50" href="https://gitlab.com/konradkubczyk/kiwi" target="_blank" rel="noreferrer">Source code</a>
+                <a class="text-decoration-none text-dark text-opacity-50" href="https://gitlab.com/konradkubczyk/kiwi"
+                    target="_blank" rel="noreferrer">Source code</a>
                 <div class="vr text-dark text-opacity-50"></div>
                 <a class="text-decoration-none text-dark text-opacity-50" href="/licenses">Licenses</a>
+            </div>
+
+            <!-- Offcanvas with calendar URL generation form -->
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="calendarUrlCreator"
+                aria-labelledby="calendarUrlCreatorLabel">
+                <div class="offcanvas-header shadow-sm">
+                    <h5 class="offcanvas-title" id="calendarUrlCreatorLabel">Calendar URL createor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <form id="calendarUrlCreatorForm">
+                        <div class="form-floating my-4">
+                            <input type="url" class="form-control bg-transparent border-dark" id="mainScheduleUrl"
+                                placeholder="https://planzajec.uek.krakow.pl/..." required>
+                            <label for="mainScheduleUrl">Main schedule URL</label>
+                            <div class="form-text text-dark text-opacity-50">
+                                The URL of your main schedule. It should be a link to a page with a list of all your
+                                classes.
+                            </div>
+                        </div>
+                        <div class="form-floating my-4">
+                            <input type="url" class="form-control bg-transparent border-dark" id="languageScheduleUrl1"
+                                placeholder="https://planzajec.uek.krakow.pl/...">
+                            <label for="languageScheduleUrl1">First language schedule URL</label>
+                            <div class="form-text text-dark text-opacity-50">
+                                The URL of your first language schedule.
+                            </div>
+                        </div>
+                        <div class="form-floating my-4">
+                            <input type="url" class="form-control bg-transparent border-dark"
+                                id="languageScheduleGroup1" placeholder="CJ-S1-1/2...">
+                            <label for="languageScheduleGroup1">First language group</label>
+                            <div class="form-text text-dark text-opacity-50">
+                                The name of your first language group.
+                            </div>
+                        </div>
+                        <div class="form-floating my-4">
+                            <input type="url" class="form-control bg-transparent border-dark" id="languageScheduleUrl2"
+                                placeholder="https://planzajec.uek.krakow.pl/...">
+                            <label for="languageScheduleUrl2">Second language schedule URL</label>
+                            <div class="form-text text-dark text-opacity-50">
+                                The URL of your second language schedule.
+                            </div>
+                        </div>
+                        <div class="form-floating my-4">
+                            <input type="url" class="form-control bg-transparent border-dark"
+                                id="languageScheduleGroup2" placeholder="CJ-S1-1/2...">
+                            <label for="languageScheduleGroup2">Second language group</label>
+                            <div class="form-text text-dark text-opacity-50">
+                                The name of your second language group.
+                            </div>
+                        </div>
+                        <!-- Read only field with generated URL and a button to copy it to clipboard -->
+                        <div class="input-group mb-3">
+                            <input id="generatedUrl" class="form-control" type="text" value="https://planzajec.uek.krakow.pl/..."
+                                aria-label="readonly input" readonly>
+                            <button class="btn btn-outline-secondary" type="button" id="copy-url-btn" onclick="navigator.clipboard.writeText(document.getElementById('generatedUrl').value);">Copy</button>
+                        </div>
+                    </form>
+                    <script>
+                        const calendarUrlCreatorForm = document.getElementById('calendarUrlCreatorForm');
+
+                        // Event listener for change of value in any field of the form
+                        calendarUrlCreatorForm.addEventListener('input', () => {
+                            // Get values from the form
+                            const mainScheduleUrl = document.getElementById('mainScheduleUrl').value;
+                            const languageScheduleUrl1 = document.getElementById('languageScheduleUrl1').value;
+                            const languageScheduleGroup1 = document.getElementById('languageScheduleGroup1').value;
+                            const languageScheduleUrl2 = document.getElementById('languageScheduleUrl2').value;
+                            const languageScheduleGroup2 = document.getElementById('languageScheduleGroup2').value;
+
+                            // Generate URL
+                            let calendarUrl = 'https://<%= appDomain %>/schedule';
+                            
+                            // Get id query parameter's value from main schedule URL
+                            calendarUrl += mainScheduleUrl ? `?id=${new URL(mainScheduleUrl).searchParams.get('id')}` : '';
+                            calendarUrl += languageScheduleUrl1 ? `,${new URL(languageScheduleUrl1).searchParams.get('id')}` : '';
+                            calendarUrl += languageScheduleUrl2 ? `,${new URL(languageScheduleUrl2).searchParams.get('id')}` : '';
+                            calendarUrl += languageScheduleGroup1 ? `&group=${languageScheduleGroup1}` : '';
+                            calendarUrl += languageScheduleGroup2 ? `,${languageScheduleGroup2}` : '';
+
+                            // Set generated URL in the read-only field
+                            document.getElementById('generatedUrl').value = calendarUrl;
+                        });                       
+                        
+                    </script>
+                </div>
             </div>
         </main>
     </div>
 </body>
+
 </html>
