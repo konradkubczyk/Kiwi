@@ -31,6 +31,7 @@
             </button>
 
             <hr class="text-dark text-opacity-50">
+
             <div class="d-flex gap-3">
                 <a class="text-decoration-none text-dark text-opacity-50"
                     href="https://gitlab.com/konradkubczyk/kiwi/-/releases#v<%= process.env.npm_package_version %>"
@@ -48,57 +49,72 @@
             <div class="offcanvas offcanvas-start" tabindex="-1" id="calendarUrlCreator"
                 aria-labelledby="calendarUrlCreatorLabel">
                 <div class="offcanvas-header shadow-sm">
-                    <h5 class="offcanvas-title" id="calendarUrlCreatorLabel">Calendar URL createor</h5>
+                    <h3 class="offcanvas-title fs-5" id="calendarUrlCreatorLabel">Calendar URL createor</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
                     <form id="calendarUrlCreatorForm">
-                        <div class="form-floating my-4">
+                        <h4 class="fs-6" style="display: flex; align-items: center;">
+                            Main schedule
+                            <hr style="margin-left: 10px; flex-grow: 1;">
+                        </h4>
+                        <div class="form-floating my-3">
                             <input type="url" class="form-control bg-transparent border-dark" id="mainScheduleUrl"
                                 placeholder="https://planzajec.uek.krakow.pl/..." required>
-                            <label for="mainScheduleUrl">Main schedule URL</label>
+                            <label for="mainScheduleUrl">Main schedule's URL</label>
                             <div class="form-text text-dark text-opacity-50">
-                                The URL of your main schedule. It should be a link to a page with a list of all your
-                                classes.
+                                Paste the URL of your main schedule here. You can find it in the address bar of your browser when you are viewing your schedule.
                             </div>
                         </div>
-                        <div class="form-floating my-4">
+                        <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
+                            First language
+                            <hr style="margin-left: 10px; flex-grow: 1;">
+                        </h4>
+                        <div class="form-floating my-3">
                             <input type="url" class="form-control bg-transparent border-dark" id="languageScheduleUrl1"
                                 placeholder="https://planzajec.uek.krakow.pl/...">
-                            <label for="languageScheduleUrl1">First language schedule URL</label>
+                            <label for="languageScheduleUrl1">First language schedule's URL</label>
                             <div class="form-text text-dark text-opacity-50">
-                                The URL of your first language schedule.
+                                Optionally provide the URL of your first language schedule.
                             </div>
                         </div>
-                        <div class="form-floating my-4">
+                        <div class="form-floating my-3">
                             <input type="url" class="form-control bg-transparent border-dark"
                                 id="languageScheduleGroup1" placeholder="CJ-S1-1/2...">
-                            <label for="languageScheduleGroup1">First language group</label>
+                            <label for="languageScheduleGroup1">First language group name</label>
                             <div class="form-text text-dark text-opacity-50">
-                                The name of your first language group.
+                                If you provided the URL of your first language schedule, input the name of your first language group here.
                             </div>
                         </div>
-                        <div class="form-floating my-4">
+                        <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
+                            Second language
+                            <hr style="margin-left: 10px; flex-grow: 1;">
+                        </h4>
+                        <div class="form-floating my-3">
                             <input type="url" class="form-control bg-transparent border-dark" id="languageScheduleUrl2"
                                 placeholder="https://planzajec.uek.krakow.pl/...">
-                            <label for="languageScheduleUrl2">Second language schedule URL</label>
+                            <label for="languageScheduleUrl2">Second language schedule's URL</label>
                             <div class="form-text text-dark text-opacity-50">
-                                The URL of your second language schedule.
+                                Optionally, if you have a second language and you provided the first one's details above, paste the URL of your second language schedule here.
                             </div>
                         </div>
-                        <div class="form-floating my-4">
+                        <div class="form-floating my-3">
                             <input type="url" class="form-control bg-transparent border-dark"
                                 id="languageScheduleGroup2" placeholder="CJ-S1-1/2...">
-                            <label for="languageScheduleGroup2">Second language group</label>
+                            <label for="languageScheduleGroup2">Second language group name</label>
                             <div class="form-text text-dark text-opacity-50">
-                                The name of your second language group.
+                                If you provided the URL of your second language schedule, input the name of your second language group here.
                             </div>
                         </div>
+                        <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
+                            Your subscription URL
+                            <hr style="margin-left: 10px; flex-grow: 1;">
+                        </h4>
                         <!-- Read only field with generated URL and a button to copy it to clipboard -->
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-1">
                             <input id="generatedUrl" class="form-control" type="text" value="https://planzajec.uek.krakow.pl/..."
                                 aria-label="readonly input" readonly>
-                            <button class="btn btn-outline-secondary" type="button" id="copy-url-btn" onclick="navigator.clipboard.writeText(document.getElementById('generatedUrl').value);">Copy</button>
+                            <button class="btn btn-dark" type="button" id="copy-url-btn" onclick="navigator.clipboard.writeText(document.getElementById('generatedUrl').value);">Copy</button>
                         </div>
                     </form>
                     <script>
