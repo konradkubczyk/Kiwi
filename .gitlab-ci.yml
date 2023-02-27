@@ -11,8 +11,8 @@ build_x86:
   script:
     - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest .
     - docker push $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest
-  only:
-    - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^Bump version/
 
 build_arm:
   stage: build
@@ -24,5 +24,5 @@ build_arm:
   script:
     - docker build --platform=linux/arm64 -t $CI_REGISTRY/$CI_PROJECT_PATH:arm64-latest .
     - docker push $CI_REGISTRY/$CI_PROJECT_PATH:arm64-latest
-  only:
-    - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^Bump version/
