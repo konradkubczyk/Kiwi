@@ -6,7 +6,7 @@ Kiwi is an open-source on-demand XML to ICS schedule transcriber, created to mak
 
 ## 🤔 How it works
 
-Kiwi works as a middleman. When a request comes through, it performs a check on it's validity and then proceeds to download information necessary from an external schedule source. These information is then processed to compose an ICS calendar file, which is then served as a response. In case of an issue, the the app responds with a text hinting towards the error's source.
+Kiwi acts like a middleman - when your calendar app requests current event information, Kiwi fetches the necessary information from an external schedule source, which it then processes to compose an ICS file. This file is then served as a response. In case of an issue, the app responds with a text hinting towards the error's source.
 
 ## 🔗 Useful links
 
