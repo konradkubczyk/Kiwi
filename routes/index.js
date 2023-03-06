@@ -25,6 +25,12 @@ router.get('/*', async function (req, res, next) {
         return res.status(400).send('Invalid or missing id parameter');
     }
 
+    // Prevent parsing of too many schedules (limit to 3)
+    if (scheduleIds.length > 3) {
+        console.error('Attempted to parse too many schedules');
+        return res.status(400).send('Attempted to parse too many schedules');
+    }
+
     // Add main schedule id to schedule properties while removing it from schedule ids
     scheduleProperties.main = {
         id: scheduleIds.shift()
