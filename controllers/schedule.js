@@ -48,6 +48,13 @@ class Schedule {
 			const scheduleJSON = await parser.parseStringPromise(scheduleXML);
 			return scheduleJSON;
 		} catch (error) {
+
+			// Use fallback URL if the main one does not provide valid data, replacing &okres=3 with &okres=1
+			if (scheduleURL.includes('&okres=3')) {
+				console.error('Could not parse data from response, trying fallback URL');
+				return await this.#getData(scheduleURL.replaceAll('&okres=3', '&okres=1'));
+			}
+
 			console.error(error);
 			throw new Error('Error while parsing data from response');
 		}
