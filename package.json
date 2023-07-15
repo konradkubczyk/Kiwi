@@ -18,8 +18,8 @@
     "ical-generator": "^3.6.0",
     "license-checker": "^25.0.1",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.20",
-    "xml2js": "^0.4.23"
+    "nodemon": "^3.0.1",
+    "xml2js": "^0.6.0"
   },
   "devDependencies": {
     "mocha": "^10.1.0",
