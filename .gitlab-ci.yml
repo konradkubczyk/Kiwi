@@ -1,40 +1,49 @@
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
-  - build
-  - test
-
+- build
+- test
 build_x86:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
+  - docker:dind
   before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest .
-    - docker push $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest
+  - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest .
+  - docker push $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^Bump version/
-
+  - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^Bump version/"
 build_arm:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
+  - docker:dind
   before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker build --platform=linux/arm64 -t $CI_REGISTRY/$CI_PROJECT_PATH:arm64-latest .
-    - docker push $CI_REGISTRY/$CI_PROJECT_PATH:arm64-latest
+  - docker build --platform=linux/arm64 -t $CI_REGISTRY/$CI_PROJECT_PATH:arm64-latest
+    .
+  - docker push $CI_REGISTRY/$CI_PROJECT_PATH:arm64-latest
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^Bump version/
-
+  - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^Bump version/"
 test:
   stage: test
   image: docker:latest
   services:
-    - docker:dind
+  - docker:dind
   before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker pull $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest
-    - docker run --rm $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest npm test
+  - docker pull $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest
+  - docker run --rm $CI_REGISTRY/$CI_PROJECT_PATH:x86_64-latest npm test
+sast:
+  stage: test
+include:
+- template: Security/SAST.gitlab-ci.yml
