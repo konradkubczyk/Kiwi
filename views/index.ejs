@@ -22,11 +22,12 @@
             <p>
                 To get a URL of a calendar for your schedule, just prepend its address with <strong>https://<%=
                         appDomain %>/</strong>. Now you can use this URL to import events to your favorite calendar app.
-                You can also click the button below to open a form that will help you create a calendar URL with support for additional groups.
+                You can also click the button below to open a form that will help you create a calendar URL with support
+                for additional groups.
             </p>
 
-            <button class="btn btn-outline-dark w-100 mb-1" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#calendarUrlCreator" aria-controls="calendarUrlCreator">
+            <button class="btn btn-outline-dark w-100 mb-1" type="button" data-bs-toggle="modal"
+                data-bs-target="#urlCreaterModal">
                 Create calendar URL
             </button>
 
@@ -45,107 +46,122 @@
                 <a class="text-decoration-none text-dark text-opacity-50" href="/licenses">Licenses</a>
             </div>
 
-            <!-- Offcanvas with calendar URL generation form -->
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="calendarUrlCreator"
-                aria-labelledby="calendarUrlCreatorLabel">
-                <div class="offcanvas-header shadow-sm">
-                    <h3 class="offcanvas-title fs-5" id="calendarUrlCreatorLabel">Calendar URL creator</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <form id="calendarUrlCreatorForm">
-                        <h4 class="fs-6" style="display: flex; align-items: center;">
-                            Main schedule
-                            <hr style="margin-left: 10px; flex-grow: 1;">
-                        </h4>
-                        <div class="form-floating my-3">
-                            <input type="url" class="form-control bg-transparent border-dark" id="mainScheduleUrl"
-                                placeholder="https://planzajec.uek.krakow.pl/..." required>
-                            <label for="mainScheduleUrl">Main schedule's URL</label>
-                            <div class="form-text text-dark text-opacity-50">
-                                Paste the URL of your main schedule here. You can find it in the address bar of your browser when you are viewing your schedule.
-                            </div>
+            <!-- Modal with calendar URL generation form -->
+            <div class="modal fade" id="urlCreaterModal" tabindex="-1" aria-labelledby="urlCreaterModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="urlCreaterModalLabel">Calendar URL creator</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
-                            First language
-                            <hr style="margin-left: 10px; flex-grow: 1;">
-                        </h4>
-                        <div class="form-floating my-3">
-                            <input type="url" class="form-control bg-transparent border-dark" id="languageScheduleUrl1"
-                                placeholder="https://planzajec.uek.krakow.pl/...">
-                            <label for="languageScheduleUrl1">First language schedule's URL</label>
-                            <div class="form-text text-dark text-opacity-50">
-                                Optionally provide the URL of your first language schedule.
-                            </div>
-                        </div>
-                        <div class="form-floating my-3">
-                            <input type="url" class="form-control bg-transparent border-dark"
-                                id="languageScheduleGroup1" placeholder="CJ-S1-1/2...">
-                            <label for="languageScheduleGroup1">First language group name</label>
-                            <div class="form-text text-dark text-opacity-50">
-                                If you provided the URL of your first language schedule, input the name of your first language group here.
-                            </div>
-                        </div>
-                        <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
-                            Second language
-                            <hr style="margin-left: 10px; flex-grow: 1;">
-                        </h4>
-                        <div class="form-floating my-3">
-                            <input type="url" class="form-control bg-transparent border-dark" id="languageScheduleUrl2"
-                                placeholder="https://planzajec.uek.krakow.pl/...">
-                            <label for="languageScheduleUrl2">Second language schedule's URL</label>
-                            <div class="form-text text-dark text-opacity-50">
-                                Optionally, if you have a second language and you provided the first one's details above, paste the URL of your second language schedule here.
-                            </div>
-                        </div>
-                        <div class="form-floating my-3">
-                            <input type="url" class="form-control bg-transparent border-dark"
-                                id="languageScheduleGroup2" placeholder="CJ-S1-1/2...">
-                            <label for="languageScheduleGroup2">Second language group name</label>
-                            <div class="form-text text-dark text-opacity-50">
-                                If you provided the URL of your second language schedule, input the name of your second language group here.
-                            </div>
-                        </div>
-                        <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
-                            Your subscription URL
-                            <hr style="margin-left: 10px; flex-grow: 1;">
-                        </h4>
-                        <!-- Read only field with generated URL and a button to copy it to clipboard -->
-                        <div class="input-group mb-1">
-                            <input id="generatedUrl" class="form-control" type="text" value="https://planzajec.uek.krakow.pl/..."
-                                aria-label="readonly input" readonly>
-                            <button class="btn btn-dark" type="button" id="copy-url-btn" onclick="navigator.clipboard.writeText(document.getElementById('generatedUrl').value);">Copy</button>
-                        </div>
-                    </form>
-                    <script>
-                        const calendarUrlCreatorForm = document.getElementById('calendarUrlCreatorForm');
+                        <div class="modal-body">
+                            <form id="calendarUrlCreatorForm">
+                                <h4 class="fs-6" style="display: flex; align-items: center;">
+                                    Main schedule
+                                    <hr style="margin-left: 10px; flex-grow: 1;">
+                                </h4>
+                                <div class="form-floating my-3">
+                                    <input type="url" class="form-control bg-transparent border-dark"
+                                        id="mainScheduleUrl" placeholder="https://planzajec.uek.krakow.pl/..." required>
+                                    <label for="mainScheduleUrl">Main schedule's URL</label>
+                                    <div class="form-text text-dark text-opacity-50">
+                                        Paste the URL of your main schedule here. You can find it in the address bar of
+                                        your
+                                        browser when you are viewing your schedule.
+                                    </div>
+                                </div>
+                                <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
+                                    First language
+                                    <hr style="margin-left: 10px; flex-grow: 1;">
+                                </h4>
+                                <div class="form-floating my-3">
+                                    <input type="url" class="form-control bg-transparent border-dark"
+                                        id="languageScheduleUrl1" placeholder="https://planzajec.uek.krakow.pl/...">
+                                    <label for="languageScheduleUrl1">First language schedule's URL</label>
+                                    <div class="form-text text-dark text-opacity-50">
+                                        Optionally provide the URL of your first language schedule.
+                                    </div>
+                                </div>
+                                <div class="form-floating my-3">
+                                    <input type="url" class="form-control bg-transparent border-dark"
+                                        id="languageScheduleGroup1" placeholder="CJ-S1-1/2...">
+                                    <label for="languageScheduleGroup1">First language group name</label>
+                                    <div class="form-text text-dark text-opacity-50">
+                                        If you provided the URL of your first language schedule, input the name of your
+                                        first
+                                        language group here.
+                                    </div>
+                                </div>
+                                <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
+                                    Second language
+                                    <hr style="margin-left: 10px; flex-grow: 1;">
+                                </h4>
+                                <div class="form-floating my-3">
+                                    <input type="url" class="form-control bg-transparent border-dark"
+                                        id="languageScheduleUrl2" placeholder="https://planzajec.uek.krakow.pl/...">
+                                    <label for="languageScheduleUrl2">Second language schedule's URL</label>
+                                    <div class="form-text text-dark text-opacity-50">
+                                        Optionally, if you have a second language and you provided the first one's
+                                        details
+                                        above, paste the URL of your second language schedule here.
+                                    </div>
+                                </div>
+                                <div class="form-floating my-3">
+                                    <input type="url" class="form-control bg-transparent border-dark"
+                                        id="languageScheduleGroup2" placeholder="CJ-S1-1/2...">
+                                    <label for="languageScheduleGroup2">Second language group name</label>
+                                    <div class="form-text text-dark text-opacity-50">
+                                        If you provided the URL of your second language schedule, input the name of your
+                                        second
+                                        language group here.
+                                    </div>
+                                </div>
+                                <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
+                                    Your subscription URL
+                                    <hr style="margin-left: 10px; flex-grow: 1;">
+                                </h4>
+                                <!-- Read only field with generated URL and a button to copy it to clipboard -->
+                                <div class="input-group mb-1">
+                                    <input id="generatedUrl" class="form-control" type="text"
+                                        value="https://planzajec.uek.krakow.pl/..." aria-label="readonly input"
+                                        readonly>
+                                    <button class="btn btn-dark" type="button" id="copy-url-btn"
+                                        onclick="navigator.clipboard.writeText(document.getElementById('generatedUrl').value);">Copy</button>
+                                </div>
+                            </form>
+                            <script>
+                                const calendarUrlCreatorForm = document.getElementById('calendarUrlCreatorForm');
 
-                        // Event listener for change of value in any field of the form
-                        calendarUrlCreatorForm.addEventListener('input', () => {
-                            // Get values from the form
-                            const mainScheduleUrl = document.getElementById('mainScheduleUrl').value;
-                            const languageScheduleUrl1 = document.getElementById('languageScheduleUrl1').value;
-                            const languageScheduleGroup1 = document.getElementById('languageScheduleGroup1').value;
-                            const languageScheduleUrl2 = document.getElementById('languageScheduleUrl2').value;
-                            const languageScheduleGroup2 = document.getElementById('languageScheduleGroup2').value;
+                                // Event listener for change of value in any field of the form
+                                calendarUrlCreatorForm.addEventListener('input', () => {
+                                    // Get values from the form
+                                    const mainScheduleUrl = document.getElementById('mainScheduleUrl').value;
+                                    const languageScheduleUrl1 = document.getElementById('languageScheduleUrl1').value;
+                                    const languageScheduleGroup1 = document.getElementById('languageScheduleGroup1').value;
+                                    const languageScheduleUrl2 = document.getElementById('languageScheduleUrl2').value;
+                                    const languageScheduleGroup2 = document.getElementById('languageScheduleGroup2').value;
 
-                            // Generate URL
-                            let calendarUrl = 'https://<%= appDomain %>/schedule';
-                            
-                            // Get id query parameter's value from main schedule URL
-                            calendarUrl += mainScheduleUrl ? `?id=${new URL(mainScheduleUrl).searchParams.get('id')}` : '';
-                            calendarUrl += languageScheduleUrl1 ? `,${new URL(languageScheduleUrl1).searchParams.get('id')}` : '';
-                            calendarUrl += languageScheduleUrl2 ? `,${new URL(languageScheduleUrl2).searchParams.get('id')}` : '';
-                            calendarUrl += languageScheduleGroup1 ? `&group=${languageScheduleGroup1}` : '';
-                            calendarUrl += languageScheduleGroup2 ? `,${languageScheduleGroup2}` : '';
+                                    // Generate URL
+                                    let calendarUrl = 'https://<%= appDomain %>/schedule';
 
-                            // Set generated URL in the read-only field
-                            document.getElementById('generatedUrl').value = calendarUrl;
-                        });                       
-                        
-                    </script>
+                                    // Get id query parameter's value from main schedule URL
+                                    calendarUrl += mainScheduleUrl ? `?id=${new URL(mainScheduleUrl).searchParams.get('id')}` : '';
+                                    calendarUrl += languageScheduleUrl1 ? `,${new URL(languageScheduleUrl1).searchParams.get('id')}` : '';
+                                    calendarUrl += languageScheduleUrl2 ? `,${new URL(languageScheduleUrl2).searchParams.get('id')}` : '';
+                                    calendarUrl += languageScheduleGroup1 ? `&group=${languageScheduleGroup1}` : '';
+                                    calendarUrl += languageScheduleGroup2 ? `,${languageScheduleGroup2}` : '';
+
+                                    // Set generated URL in the read-only field
+                                    document.getElementById('generatedUrl').value = calendarUrl;
+                                });
+
+                            </script>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </main>
     </div>
 </body>
