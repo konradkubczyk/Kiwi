@@ -42,7 +42,7 @@ router.get('/*', async function (req, res, next) {
 
     // Check whether the id parameter has more values
     if (scheduleIds.length) {
-        
+
         // Get group names from request
         try {
             groupNames = req.query.group.split(',');
@@ -68,11 +68,13 @@ router.get('/*', async function (req, res, next) {
     }
 
     // Get ignored classes names
-    try {
-        scheduleProperties.ignored = req.query.ignore.split(',');
-    } catch {
-        console.error(error);
-        return res.status(400).send('Invalid ignored classes parameter');
+    if (req.query.ignore) {
+        try {
+            scheduleProperties.ignored = req.query.ignore.split(',');
+        } catch {
+            console.error(error);
+            return res.status(400).send('Invalid ignored classes parameter');
+        }
     }
 
     // Create schedule object
