@@ -13,6 +13,10 @@ router.get('/', function (req, res, next) {
 // GET /* (all other routes)
 router.get('/*', async function (req, res, next) {
 
+    if (!req.query.id) {
+        return res.status(400).send('Missing id parameter');
+    }
+
     let scheduleIds;
     let groupNames;
     let scheduleProperties = {};
@@ -61,6 +65,14 @@ router.get('/*', async function (req, res, next) {
                 group: groupNames[i]
             });
         }
+    }
+
+    // Get ignored classes names
+    try {
+        scheduleProperties.ignored = req.query.ignore.split(',');
+    } catch {
+        console.error(error);
+        return res.status(400).send('Invalid ignored classes parameter');
     }
 
     // Create schedule object

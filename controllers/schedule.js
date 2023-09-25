@@ -69,6 +69,13 @@ class Schedule {
 		// Get data for main schedule
 		let scheduleJSON = await this.#getData(`https://planzajec.uek.krakow.pl/index.php?typ=G&id=${this.properties.main.id}&okres=3&xml`);
 
+		// Filder out events for ignored optional classes
+		if (this.properties.ignored) {
+			scheduleJSON['plan-zajec']['zajecia'] = scheduleJSON['plan-zajec']['zajecia'].filter(event => {
+				return !(event['typ'] === 'ćwiczenia do wyboru' && this.properties.ignored.includes(event['przedmiot']))
+			});
+		}
+
 		// Get data for extra schedules and merge it with main schedule
 		if (this.properties.extra) {
 

@@ -71,6 +71,18 @@
                                         browser when you are viewing your schedule.
                                     </div>
                                 </div>
+                                <h4 class="fs-6" style="display: flex; align-items: center;">
+                                    Ignored classes
+                                    <hr style="margin-left: 10px; flex-grow: 1;">
+                                </h4>
+                                <div class="form-floating my-3">
+                                    <input type="url" class="form-control bg-transparent border-dark"
+                                        id="ignoredClasses" placeholder="Przedmiot 1,Przedmiot 2" required>
+                                    <label for="ignoredClasses">Optional classes to ignore</label>
+                                    <div class="form-text text-dark text-opacity-50">
+                                        Colon-separated list of optional classes which will be filtered out from the calendar.
+                                    </div>
+                                </div>
                                 <h4 class="fs-6 mt-4" style="display: flex; align-items: center;">
                                     First language
                                     <hr style="margin-left: 10px; flex-grow: 1;">
@@ -141,6 +153,7 @@
                                     const languageScheduleGroup1 = document.getElementById('languageScheduleGroup1').value;
                                     const languageScheduleUrl2 = document.getElementById('languageScheduleUrl2').value;
                                     const languageScheduleGroup2 = document.getElementById('languageScheduleGroup2').value;
+                                    const ignoredClasses = document.getElementById('ignoredClasses').value;
 
                                     // Generate URL
                                     let calendarUrl = 'https://<%= appDomain %>/schedule';
@@ -151,6 +164,7 @@
                                     calendarUrl += languageScheduleUrl2 ? `,${new URL(languageScheduleUrl2).searchParams.get('id')}` : '';
                                     calendarUrl += languageScheduleGroup1 ? `&group=${languageScheduleGroup1}` : '';
                                     calendarUrl += languageScheduleGroup2 ? `,${languageScheduleGroup2}` : '';
+                                    calendarUrl += ignoredClasses ? `&ignore=${ignoredClasses}` : '';
 
                                     // Set generated URL in the read-only field
                                     document.getElementById('generatedUrl').value = calendarUrl;
