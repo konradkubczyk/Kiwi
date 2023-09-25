@@ -49,10 +49,10 @@ class Schedule {
 			return scheduleJSON;
 		} catch (error) {
 
-			// Use fallback URL if the main one does not provide valid data, replacing &okres=3 with &okres=1
-			if (scheduleURL.includes('&okres=3')) {
+			// Use fallback URL if the main one does not provide valid data, replacing &okres=2 with &okres=1
+			if (scheduleURL.includes('&okres=2')) {
 				console.error('Could not parse data from response, trying fallback URL');
-				return await this.#getData(scheduleURL.replaceAll('&okres=3', '&okres=1'));
+				return await this.#getData(scheduleURL.replaceAll('&okres=2', '&okres=1'));
 			}
 
 			console.error(error);
@@ -67,7 +67,7 @@ class Schedule {
 	async getICS() {
 
 		// Get data for main schedule
-		let scheduleJSON = await this.#getData(`https://planzajec.uek.krakow.pl/index.php?typ=G&id=${this.properties.main.id}&okres=3&xml`);
+		let scheduleJSON = await this.#getData(`https://planzajec.uek.krakow.pl/index.php?typ=G&id=${this.properties.main.id}&okres=2&xml`);
 
 		// Filder out events for ignored optional classes
 		if (this.properties.ignored) {
@@ -85,7 +85,7 @@ class Schedule {
 			});
 
 			for (const extraSchedule of this.properties.extra) {
-				const extraScheduleJSON = await this.#getData(`https://planzajec.uek.krakow.pl/index.php?typ=N&id=${extraSchedule.id}&okres=3&xml`);
+				const extraScheduleJSON = await this.#getData(`https://planzajec.uek.krakow.pl/index.php?typ=N&id=${extraSchedule.id}&okres=2&xml`);
 
 				// Filter out events from other groups
 				extraScheduleJSON['plan-zajec']['zajecia'] = extraScheduleJSON['plan-zajec']['zajecia'].filter(event => {
