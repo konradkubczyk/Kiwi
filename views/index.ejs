@@ -164,7 +164,7 @@
                                     calendarUrl += languageScheduleUrl2 ? `,${new URL(languageScheduleUrl2).searchParams.get('id')}` : '';
                                     calendarUrl += languageScheduleGroup1 ? `&group=${languageScheduleGroup1}` : '';
                                     calendarUrl += languageScheduleGroup2 ? `,${languageScheduleGroup2}` : '';
-                                    calendarUrl += ignoredClasses ? `&ignore=${ignoredClasses}` : '';
+                                    calendarUrl += ignoredClasses ? `&ignore=${encodeURIComponent(ignoredClasses)}` : '';
 
                                     // Set generated URL in the read-only field
                                     document.getElementById('generatedUrl').value = calendarUrl;
