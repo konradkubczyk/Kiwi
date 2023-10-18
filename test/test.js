@@ -12,10 +12,10 @@ describe('App', function() {
       .get('/licenses')
       .expect(/express/, done);
   });
-  // it('generates a schedule', function(done) {
-  //   request(app)
-  //     .get('/https://planzajec.uek.krakow.pl/index.php?typ=G&id=190181&okres=1')
-  //     .expect('Content-Type', /text\/calendar/)
-  //     .expect(/BEGIN:VCALENDAR/, done);
-  // });
+  it('generates a schedule', function(done) {
+    request(app)
+      .get('/https://planzajec.uek.krakow.pl/index.php?typ=G&id=237961&okres=1')
+      .expect('Content-Type', /text\/calendar/)
+      .expect(/BEGIN:VCALENDAR/, done);
+  });
 });
