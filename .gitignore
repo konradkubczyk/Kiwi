@@ -60,3 +60,7 @@ typings/
 # next.js build output
 .next
 licenses.json
+
+# Editor/IDE files
+.idea
+.vscode
