@@ -14,7 +14,7 @@ describe('App', function() {
   });
   it('generates a schedule', function(done) {
     request(app)
-      .get('/https://planzajec.uek.krakow.pl/index.php?typ=G&id=237961&okres=1')
+      .get('/https://planzajec.uek.krakow.pl/index.php?typ=G&id=237991&okres=1')
       .expect('Content-Type', /text\/calendar/)
       .expect(/BEGIN:VCALENDAR/, done);
   });
