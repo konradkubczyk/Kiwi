@@ -4,14 +4,14 @@ const router = express.Router();
 const Schedule = require('../controllers/schedule');
 
 // GET home page
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     const appDomain = req.get('host');
 
     res.render('index', { appDomain });
 });
 
 // GET /* (all other routes)
-router.get('/*', async function (req, res, next) {
+router.get('/*', async function (req, res) {
 
     if (!req.query.id) {
         return res.status(400).send('Missing id parameter');
@@ -71,10 +71,18 @@ router.get('/*', async function (req, res, next) {
     if (req.query.ignore) {
         try {
             scheduleProperties.ignored = req.query.ignore.split(',');
-        } catch {
+        } catch (error) {
             console.error(error);
             return res.status(400).send('Invalid ignored classes parameter');
         }
+    }
+
+    if (req.query.compact !== undefined) {
+        scheduleProperties.compact = true;
+    }
+
+    if (req.query.reverse !== undefined) {
+        scheduleProperties.reverse = true;
     }
 
     // Create schedule object
